@@ -1,6 +1,6 @@
 import DiscordJS, { Intents } from 'discord.js'
 /**
-* *naimportování knihovny discord.js, níže dokumentace k library
+* *imports discord.js, documentation for library bellow
 * !https://discord.js.org/#/docs/discord.js/stable/general/welcome
 */
 import dotenv from 'dotenv'
@@ -9,11 +9,11 @@ import "dotenv/config"
 //config for dotenv
 import WOKcommands from 'wokcommands'
 /**
- * *import WOKcommands pro jednoduší využití legacy commands níže dokumentace
+ * *import WOKcommands for easier usage of legacy commands documentation down bellow
 * !https://docs.wornoffkeys.com/ 
 */
 import path from 'path'
-//naimportuje cestu k souborům
+//imports path to files
 dotenv.config();
 export const { MessageEmbed } = require('discord.js');
 export const bot = new DiscordJS.Client({
@@ -25,28 +25,28 @@ export const bot = new DiscordJS.Client({
         Intents.FLAGS.GUILD_PRESENCES,
     ]
 })
-//nad tímto komentářem je vytvoření objektu bot, kterým je vlastně náš celý discord bot
+//above this comment, we create our bot, we need to specify intents which he will look for
 bot.on('ready', function () {
-//bot po spuštění napíše do konzole toto:
+//after start up bot does this:
     console.log('Zču bot is online to help students all around discordia')
-//bot vytvoří nový objekt WOKcommands, přes který pak řeší volání jednotlivých příkazů
+//bot creates object called WOKcommands to use legacy commands
     new WOKcommands(bot, {
       commandDir: path.join(__dirname, 'comms'),
       typeScript: true,
       })
     })
-
+//bellow is code for simple reacting to messages and deleting them
 bot.on('messageCreate', message => {
-  let hajzl = message.author.username
-    if(hajzl === null)
-      {console.log("hajzl is null")}
+  let swearer = message.author.username
+    if(swearer === null)
+      {console.log("swearer is null")}
     else
-      {let reply = hajzl + " tried to swear"
-      const swear_words = ["fuck","sračka","matika","debil","kretén","prasák","prdel"]
+      {let reply = swearer + " tried to swear"
+      const swear_words = [""]
         for (var i=0; i < swear_words.length; i++) {
           if (message.content.includes(swear_words[i]))
             {message.delete();
-            message.channel.send("Nenadávejte zde");
+            message.channel.send("dont swear here");
             console.log(reply);
             }
           }
