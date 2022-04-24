@@ -31,6 +31,7 @@ bot.on('ready', function () {
     console.log('Zču bot is online to help students all around discordia')
 //bot creates object called WOKcommands to use legacy commands
     new WOKcommands(bot, {
+       //commandDir = path to our folder with commands
       commandDir: path.join(__dirname, 'comms'),
       typeScript: true,
       })
