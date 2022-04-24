@@ -4,16 +4,18 @@ import fs from "fs";
 //https://nodejs.org/api/fs.html
 export default {
 category: "Commands",
-description: "shows info or timeschedule of subject",
-expectedArgs: "<předmět> <info/rozvrh>",
+description: "reads specific json files in folder",
+expectedArgs: "<folder> <filename>",
 minArgs:0,
 maxArgs:2,
 
 callback: ({message, args}) => {
+    //helper = number of arguments
     const helper = args.length;
+    //if there are no arguments, tells us what folders it can read from
     if(helper ==0)
     {
-        var files = fs.readdirSync('predmety');
+        var files = fs.readdirSync('folders');
            let file = "";
            let list = 1;
             for (let i = 0; i < files.length; i++) {
@@ -23,29 +25,34 @@ callback: ({message, args}) => {
           }
           return(file)
           }
+          //if we specify folder but not file to read it tells us to use help command
           else if(helper==1)
-          {return("Eng: use !help predmet\nČJ: použij !help predmet")}
+          {return("Eng: use !help filereader\nČJ: použij !help filereader")}
+          //if we specify folder and file it will read the file and return specific information or all of them based on further arguments
           else if(helper==2)
           {    
 readFile("./predmety/"+args[0]+"/"+args[1].toLowerCase()+".json", (err, data)=> {
 if (err) throw err;
 let dats = JSON.parse(data.toString());
-if(args[1] =="rozvrh")
+if(args[1] =="specific")
 {
 let repl = ""
 let reply=""
-for (let i = 0; i < dats.rozvrhovaAkce.length; i++) {
-    repl += (i+1)+". " +"\n" +"Vyučující: "+ dats.rozvrhovaAkce[i].ucitel.titulPred+" "+dats.rozvrhovaAkce[i].ucitel.jmeno+" "+dats.rozvrhovaAkce[i].ucitel.prijmeni+" "+dats.rozvrhovaAkce[i].ucitel.titulZa+"\n"+"Místo: "+dats.rozvrhovaAkce[i].budova+dats.rozvrhovaAkce[i].mistnost+"\n"+"Rozvrhová akce: "+dats.rozvrhovaAkce[i].typAkce+ "\n"+"Týden: "+ dats.rozvrhovaAkce[i].tyden+"\n"+"Den: "+dats.rozvrhovaAkce[i].den+" od: "+dats.rozvrhovaAkce[i].hodinaSkutOd.value+" do: "+dats.rozvrhovaAkce[i].hodinaSkutDo.value+"\n\n";         
+//here is example of reading array
+for (let i = 0; i < dats.arry.length; i++) {
+    repl += (i+1)+". " +"\n" +"info: "+ dats.arry[i].obj1.info1+" "+dats.arry[i].obj1.info2+" "+dats.arry[i].obj1.info3+" "+dats.arry[i].obj1.info4+"\n"+"Místo: "+dats.arry[i].obj2+dats.arry[i].obj3+...;         
 }
+//getting rid of null values in json files
 if(repl.includes("null",))
 {
 reply = repl.replace(/null/g,"")   
 } 
 message.channel.send(reply)
 }
-if(args[1]=="info")
+if(args[1]=="all")
 {
-var repl = "Katedra: "+dats.katedra +"\n"+"Zkratka předmětu: " + dats.zkratka+"\n"+"Název předmětu: " + dats.nazev +"\n" + "Zakončení předmětu: " + dats.typZkousky +"\n" + "Kreditové ohodnocení: " + dats.kreditu+"\n" + "Učí se v zimním semestru: " + dats.vyukaZS+"\n" + "Učí se v letním semestru: " + dats.vyukaLS;
+//but using this will read file as is, that means that it includes {} and other symbols of json file, using the specific method is simpler, ofc we can use the same thing as with null and delete the content that we dont like
+var repl = data.toString()
 message.channel.send(repl)
 }
 
