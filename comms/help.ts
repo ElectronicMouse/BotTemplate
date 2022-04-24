@@ -3,8 +3,8 @@ import { ICommand } from "wokcommands";
 const fs = require('fs');
 export default {
 category: "Commands",
-description: "shows all commands bot knows in alphabetical order",
-expectedArgs: "<arg1>",
+description: "shows all commands bot knows or shows how to use them",
+expectedArgs: "<commands>",
 minArgs:0,
 maxArgs:1,
 
