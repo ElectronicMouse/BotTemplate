@@ -11,6 +11,8 @@ then: npm install -g typescript ts-node
 
 then preferably for legacy commands: npm install wokcommands
 
+then for fetch: npm i node-fetch@2.6.1
+
 create file: index.ts
 
 go to json file and to scripts, add "dev" from json here at this git
