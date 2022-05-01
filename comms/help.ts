@@ -10,16 +10,22 @@ maxArgs:1,
 
   callback: ({message, args}) => {
 //helper = number of arguments
-const helper = args.length;
+ const helper = args.length;
 //if there are no arguments do this
-if(helper ==0)
-{
-    var files = fs.readdirSync('comms');
-       let file = "";
-        for (let i = 0; i < files.length; i++) {
-          var arry = files[i].split(".");
-          file += (i+1) +") " + arry[0] + "\n";
-      }
+      if (helper == 0) {
+            var files = fs.readdirSync('comms');
+            let file = "";
+            let list =0
+            for (let i = 0; i < files.length; i++) {
+                var arry = files[i].split(".");
+              //also yes, wokcommands has hidden attribute for its commands which is for inbuild help command, this one is made mostly for its possibility of customization  
+              if((files[i]=="easteregg.ts") || (files[i]=="invisible.ts"))
+                {}
+                else{
+                file += (x+1) + ") " + arry[0] + "\n";
+                list++
+            }}
+          
       return(file)
       }
     //if there is 1 argument do this
